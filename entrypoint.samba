@@ -19,7 +19,7 @@ if [[ ! -e $EP_RUN ]] ; then
 		log "Adapting configuration files ..."
 		log "	smb.conf"
 		for conf in ${!SAMBA_CONFD_@}; do
-			[[ "X${!conf}" != "X" ]] && continue
+			[[ "X${!conf}" == "X" ]] && continue
 			name="${conf,,}.conf"
 			name="${name#"samba_confd_"}"
 			[[ "X$name" == "X" ]] && continue
