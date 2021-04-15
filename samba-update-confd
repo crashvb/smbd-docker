@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+source /usr/local/lib/entrypoint.sh
+
+path=$SAMBA_CONFIG/smb-confd.conf
+
+log "Generating: $path ..."
+> $path
+for i in /etc/samba/conf.d/*.conf
+do
+	if [[ -e $i ]] ; then
+		log "	$(basename $i)"
+		echo "include = $i" >> $path
+	fi
+done
+
