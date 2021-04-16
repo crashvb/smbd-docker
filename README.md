@@ -34,11 +34,14 @@ The embedded healthcheck script is located at `/etc/healthcheck.d/samba` and per
 
 ```
 /
-└─ etc/
-   ├─ samba/
-   ├─ entrypoint.d/
-   │  └─ samba
-   └─ healthcheck.d/
+├─ etc/
+│  ├─ samba/
+│  ├─ entrypoint.d/
+│  │  └─ samba
+│  └─ healthcheck.d/
+│     └─ samba
+└─ var/
+   └─ lib/
       └─ samba
 ```
 
