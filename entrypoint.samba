@@ -9,7 +9,8 @@ if [[ ! -e $EP_RUN ]] ; then
 	# Volume initialization
 	if [[ ! -f $SAMBA_CONFIG/smb.conf ]] ; then
 		log "Initializing data volume ..."
-		cp --no-clobber --recursive /usr/local/share/samba/config/* $SAMBA_CONFIG/
+		cp --no-clobber --recursive --verbose /usr/local/share/samba/config/* $SAMBA_CONFIG/
+		cp --no-clobber --recursive --verbose /usr/local/share/samba/data/* $SAMBA_DATA/
 
 		if [[ "X${SAMBA_CONF}" != "X" ]] ; then
 			log "Deploying global samba configuration ..."

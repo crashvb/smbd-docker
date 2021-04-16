@@ -52,6 +52,7 @@ The embedded healthcheck script is located at `/etc/healthcheck.d/samba` and per
 ### Volumes
 
 * `/etc/samba` - samba configuration directory.
+* `/var/lib/samba` - samba data directory.
 
 ## Development
 
