@@ -18,7 +18,7 @@ RUN docker-apt samba
 
 # Configure: samba
 ENV SAMBA_CONFIG=/etc/samba SAMBA_DATA=/var/lib/samba SAMBA_GID=500 SAMBA_NAME=samba SAMBA_UID=500
-ADD samba-* /usr/local/bin/
+COPY samba-* /usr/local/bin/
 RUN groupadd --gid=${SAMBA_GID} --system ${SAMBA_NAME} && \
 	useradd --create-home --gid=${SAMBA_GID} --shell=/usr/bin/nologin --system --uid=${SAMBA_UID} ${SAMBA_NAME} && \
 	install --directory --group=root --mode=0775 --owner=root ${SAMBA_CONFIG}/conf.d/ /usr/local/share/samba && \
@@ -27,13 +27,13 @@ RUN groupadd --gid=${SAMBA_GID} --system ${SAMBA_NAME} && \
 	mv ${SAMBA_DATA} /usr/local/share/samba/data
 
 # Configure: supervisor
-ADD supervisord.samba.conf /etc/supervisor/conf.d/samba.conf
+COPY supervisord.samba.conf /etc/supervisor/conf.d/samba.conf
 
 # Configure: entrypoint
-ADD entrypoint.samba /etc/entrypoint.d/samba
+COPY entrypoint.samba /etc/entrypoint.d/samba
 
 # Configure: healthcheck
-ADD healthcheck.samba /etc/healthcheck.d/samba
+COPY healthcheck.samba /etc/healthcheck.d/samba
 
 EXPOSE 137/udp 138/udp 139/tcp 445/tcp
 
