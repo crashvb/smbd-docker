@@ -1,20 +1,20 @@
 #!/bin/bash
 
-set -e
+set -e -o pipefail
 
 # Configure: samba
-if [[ ! -e $EP_RUN ]] ; then
-	log "Configuring $(basename $0) for first run ..."
+if [[ ! -e "${EP_RUN}" ]] ; then
+	log "Configuring $(basename "${0}") for first run ..."
 
 	# Volume initialization
-	if [[ ! -f $SAMBA_CONFIG/smb.conf ]] ; then
+	if [[ ! -f "${SAMBA_CONFIG}/smb.conf" ]] ; then
 		log "Initializing data volume ..."
-		cp --no-clobber --recursive --verbose /usr/local/share/samba/config/* $SAMBA_CONFIG/
-		cp --no-clobber --recursive --verbose /usr/local/share/samba/data/* $SAMBA_DATA/
+		cp --no-clobber --recursive --verbose /usr/local/share/samba/config/* "${SAMBA_CONFIG}/"
+		cp --no-clobber --recursive --verbose /usr/local/share/samba/data/* "${SAMBA_DATA}/"
 
 		if [[ "X${SAMBA_CONF}" != "X" ]] ; then
 			log "Deploying global samba configuration ..."
-			echo "${SAMBA_CONF}" | envsubst > $SAMBA_CONFIG/smb.conf
+			echo "${SAMBA_CONF}" | envsubst > "${SAMBA_CONFIG}/smb.conf"
 		fi
 
 		log "Adapting configuration files ..."
@@ -23,16 +23,16 @@ if [[ ! -e $EP_RUN ]] ; then
 			[[ "X${!conf}" == "X" ]] && continue
 			name="${conf,,}.conf"
 			name="${name#"samba_confd_"}"
-			[[ "X$name" == "X" ]] && continue
+			[[ "X${name}" == "X" ]] && continue
 
-			log "	$name"
-			echo "${!conf}" | envsubst > $SAMBA_CONFIG/conf.d/${name}
+			log "	${name}"
+			echo "${!conf}" | envsubst > "${SAMBA_CONFIG}/conf.d/${name}"
 		done
-		echo "include = $SAMBA_CONFIG/smb-confd.conf" >> $SAMBA_CONFIG/smb.conf
+		echo "include = ${SAMBA_CONFIG}/smb-confd.conf" >> "${SAMBA_CONFIG}/smb.conf"
 		samba-update-confd
 
 		log "Applying ownership and permissions ..."
-		find $SAMBA_CONFIG \( \! -user root -o \! -group root \) -exec chown root:root {} \;
+		find "${SAMBA_CONFIG}" \( \! -user root -o \! -group root \) -exec chown root:root {} \;
 	else
 		log "Skipping data volume initialization ..."
 	fi

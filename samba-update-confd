@@ -1,18 +1,19 @@
 #!/bin/bash
 
-set -e
+set -e -o pipefail
+shopt -s nullglob
 
 source /usr/local/lib/entrypoint.sh
 
-path=$SAMBA_CONFIG/smb-confd.conf
+path="${SAMBA_CONFIG}/smb-confd.conf"
 
-log "Generating: $path ..."
-> $path
+log "Generating: ${path} ..."
+true > "${path}"
 for i in /etc/samba/conf.d/*.conf
 do
-	if [[ -e $i ]] ; then
-		log "	$(basename $i)"
-		echo "include = $i" >> $path
+	if [[ -e "${i}" ]] ; then
+		log "	$(basename "${i}")"
+		echo "include = ${i}" >> "${path}"
 	fi
 done
 
