@@ -25,14 +25,6 @@ The embedded entrypoint script is located at `/etc/entrypoint.d/samba` and perfo
  | SAMBA_NAME | samba | Name of the samba user. |
  | SAMBA_UID | 500 | User ID of the samba user. |
 
-## Healthcheck Scripts
-
-### samba
-
-The embedded healthcheck script is located at `/etc/healthcheck.d/samba` and performs the following actions:
-
-1. Verifies that the smbd process exists.
-
 ## Standard Configuration
 
 ### Container Layout
@@ -41,13 +33,14 @@ The embedded healthcheck script is located at `/etc/healthcheck.d/samba` and per
 /
 ├─ etc/
 │  ├─ samba/
+│  │  └─ conf.d/
 │  ├─ entrypoint.d/
 │  │  └─ samba
 │  └─ healthcheck.d/
 │     └─ samba
 └─ var/
    └─ lib/
-      └─ samba
+      └─ samba/
 ```
 
 ### Exposed Ports
