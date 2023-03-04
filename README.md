@@ -36,8 +36,11 @@ The embedded entrypoint script is located at `/etc/entrypoint.d/samba` and perfo
 │  │  └─ conf.d/
 │  ├─ entrypoint.d/
 │  │  └─ samba
-│  └─ healthcheck.d/
-│     └─ samba
+│  ├─ healthcheck.d/
+│  │  └─ samba
+│  └─ supervisor/
+│     └─ config.d/
+│        └─ samba.conf
 └─ var/
    └─ lib/
       └─ samba/
