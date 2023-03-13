@@ -20,7 +20,7 @@ RUN docker-apt samba
 ENV SAMBA_CONFIG=/etc/samba SAMBA_DATA=/var/lib/samba SAMBA_GID=500 SAMBA_NAME=samba SAMBA_UID=500
 COPY samba-* /usr/local/bin/
 RUN groupadd --gid=${SAMBA_GID} --system ${SAMBA_NAME} && \
-	useradd --create-home --gid=${SAMBA_GID} --shell=/usr/bin/nologin --system --uid=${SAMBA_UID} ${SAMBA_NAME} && \
+	useradd --create-home --gid=${SAMBA_GID} --shell=/usr/sbin/nologin --system --uid=${SAMBA_UID} ${SAMBA_NAME} && \
 	install --directory --group=root --mode=0775 --owner=root ${SAMBA_CONFIG}/conf.d/ /usr/local/share/samba && \
 	cp --preserve ${SAMBA_CONFIG}/smb.conf ${SAMBA_CONFIG}/smb.conf.dist && \
 	mv ${SAMBA_CONFIG} /usr/local/share/samba/config && \
